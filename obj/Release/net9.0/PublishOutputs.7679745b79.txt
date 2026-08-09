@@ -1,0 +1,14 @@
+C:\Users\jorge\source\repos\Portafolio\publish\Portafolio.exe
+C:\Users\jorge\source\repos\Portafolio\publish\appsettings.Development.json
+C:\Users\jorge\source\repos\Portafolio\publish\appsettings.json
+C:\Users\jorge\source\repos\Portafolio\publish\Portafolio.dll
+C:\Users\jorge\source\repos\Portafolio\publish\Portafolio.runtimeconfig.json
+C:\Users\jorge\source\repos\Portafolio\publish\Portafolio.pdb
+C:\Users\jorge\source\repos\Portafolio\publish\Microsoft.AspNetCore.OpenApi.dll
+C:\Users\jorge\source\repos\Portafolio\publish\Microsoft.EntityFrameworkCore.dll
+C:\Users\jorge\source\repos\Portafolio\publish\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\jorge\source\repos\Portafolio\publish\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\jorge\source\repos\Portafolio\publish\Microsoft.OpenApi.dll
+C:\Users\jorge\source\repos\Portafolio\publish\MySqlConnector.dll
+C:\Users\jorge\source\repos\Portafolio\publish\Pomelo.EntityFrameworkCore.MySql.dll
+C:\Users\jorge\source\repos\Portafolio\publish\Portafolio.deps.json

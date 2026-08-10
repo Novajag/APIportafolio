@@ -9,9 +9,22 @@ builder.Services.AddHttpClient<TelegramService>();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-// Fijamos la versión explícita de MariaDB/MySQL en lugar de usar AutoDetect
+// Configuración de MySQL con reintentos y tolerancia a fallos de red/SSL
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 31))));
+{
+    if (!string.IsNullOrEmpty(connectionString))
+    {
+        options.UseMySql(
+            connectionString,
+            ServerVersion.AutoDetect(connectionString),
+            mySqlOptions => mySqlOptions.EnableRetryOnFailure(
+                maxRetryCount: 5,
+                maxRetryDelay: TimeSpan.FromSeconds(10),
+                errorNumbersToAdd: null
+            )
+        );
+    }
+});
 
 builder.Services.AddCors(options =>
 {
@@ -25,7 +38,7 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// Envolvemos las migraciones en un bloque try-catch para evitar que el proceso colapse si la BD tarda en responder
+// Ejecución segura de migraciones
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
@@ -33,6 +46,7 @@ using (var scope = app.Services.CreateScope())
     {
         var context = services.GetRequiredService<ApplicationDbContext>();
         context.Database.Migrate();
+        Console.WriteLine("Migraciones ejecutadas exitosamente en Aiven MySQL.");
     }
     catch (Exception ex)
     {

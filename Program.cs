@@ -4,12 +4,18 @@ using Portafolio.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// FIX STATUS 139: Desactiva el monitoreo continuo de archivos (inotify) en Linux/Docker
+builder.Configuration
+    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: false)
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: false)
+    .AddEnvironmentVariables();
+
 builder.Services.AddControllers();
 builder.Services.AddHttpClient<TelegramService>();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-// Configuración de MySQL con reintentos y tolerancia a fallos de red/SSL
+// Configuración de MySQL para Aiven con reintentos
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     if (!string.IsNullOrEmpty(connectionString))
